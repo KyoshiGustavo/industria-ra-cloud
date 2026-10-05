@@ -40,39 +40,37 @@ async function carregarTelemetria() {
         conteudo.innerHTML = `
             <h3 style="color: #ff4d4d;"> Erro de Ligação</h3>
             <p>Não foi possível consultar os dados do equipamento.</p>
-            <p><small>Verifique a disponibilidade do serviço API e tente novamente.</small></p>
+            <p><small>Verifique a disponibilidade do serviço API no Codespaces e tente novamente.</small></p>
         `;
     }
 }
 
-// Configura os cliques nativos do A-Frame quando o DOM estiver pronto
-document.addEventListener("DOMContentLoaded", () => {
-    const btnBase = document.getElementById("hotspot-base");
-    const btnBraco = document.getElementById("hotspot-braco");
-    const btnPunho = document.getElementById("hotspot-punho");
-    const btnGarra = document.getElementById("hotspot-garra");
+// Configura os ouvintes de evento diretamente em cada elemento assim que carregados
+window.addEventListener("DOMContentLoaded", () => {
+    const associarClique = (id, acao) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("click", acao);
+            el.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                acao();
+            });
+        }
+    };
 
-    if (btnBase) {
-        btnBase.addEventListener("click", () => {
-            exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
-        });
-    }
+    associarClique("hotspot-base", () => {
+        exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
+    });
 
-    if (btnBraco) {
-        btnBraco.addEventListener("click", () => {
-            exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
-        });
-    }
+    associarClique("hotspot-braco", () => {
+        exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
+    });
 
-    if (btnPunho) {
-        btnPunho.addEventListener("click", () => {
-            exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
-        });
-    }
+    associarClique("hotspot-punho", () => {
+        exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
+    });
 
-    if (btnGarra) {
-        btnGarra.addEventListener("click", () => {
-            carregarTelemetria();
-        });
-    }
+    associarClique("hotspot-garra", () => {
+        carregarTelemetria();
+    });
 });

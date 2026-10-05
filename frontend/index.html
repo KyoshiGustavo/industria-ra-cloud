@@ -8,6 +8,7 @@
     
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script src="js/app.js"></script>
 </head>
 <body>
 
@@ -21,20 +22,21 @@
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false" 
-        device-orientation-permission-ui="enabled: false">
+        device-orientation-permission-ui="enabled: false"
+        raycaster="objects: .clickable"
+        cursor="rayOrigin: mouse; fuse: false">
         
-        <a-camera position="0 0 0" look-controls="enabled: false" raycaster="objects: .clickable" cursor="fuse: false; rayOrigin: mouse;"></a-camera>
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0">
             
-            <a-sphere id="hotspot-base" class="clickable" position="-0.2 -0.4 0" radius="0.06" color="#FF5722"></a-sphere>
-            <a-sphere id="hotspot-braco" class="clickable" position="-0.2 0.0 0" radius="0.06" color="#2196F3"></a-sphere>
-            <a-sphere id="hotspot-punho" class="clickable" position="0.2 0.3 0" radius="0.06" color="#4CAF50"></a-sphere>
-            <a-sphere id="hotspot-garra" class="clickable" position="0.4 0.1 0" radius="0.08" color="#E91E63"></a-sphere>
+            <a-sphere id="hotspot-base" class="clickable" position="-0.2 -0.4 0" radius="0.1" color="#FF5722"></a-sphere>
+            <a-sphere id="hotspot-braco" class="clickable" position="-0.2 0.0 0" radius="0.1" color="#2196F3"></a-sphere>
+            <a-sphere id="hotspot-punho" class="clickable" position="0.2 0.3 0" radius="0.1" color="#4CAF50"></a-sphere>
+            <a-sphere id="hotspot-garra" class="clickable" position="0.4 0.1 0" radius="0.12" color="#E91E63"></a-sphere>
 
         </a-entity>
     </a-scene>
 
-    <script src="js/app.js"></script>
 </body>
 </html>
