@@ -45,7 +45,7 @@ async function carregarTelemetria() {
     }
 }
 
-// Registra o componente personalizado do A-Frame para lidar nativamente com cliques 3D
+// Componente A-Frame para eventos 3D
 AFRAME.registerComponent('hotspot-action', {
     schema: {
         tipo: { type: 'string', default: '' }
@@ -54,7 +54,7 @@ AFRAME.registerComponent('hotspot-action', {
         const el = this.el;
         const tipo = this.data.tipo;
 
-        el.addEventListener('click', function () {
+        const dispararAcao = () => {
             if (tipo === 'base') {
                 exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
             } else if (tipo === 'braco') {
@@ -64,6 +64,12 @@ AFRAME.registerComponent('hotspot-action', {
             } else if (tipo === 'garra') {
                 carregarTelemetria();
             }
+        };
+
+        el.addEventListener('click', dispararAcao);
+        el.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            dispararAcao();
         });
     }
 });
