@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/equipamentos/ROBO-01";
+const API_URL = "https://opulent-space-fiesta-6vg6w9rx469g346q7-5000.app.github.dev/api/equipamentos/ROBO-01";
 
 function fecharPainel() {
     document.getElementById("info-panel").style.display = "none";
@@ -44,3 +44,35 @@ async function carregarTelemetria() {
         `;
     }
 }
+
+// Configura os cliques nativos do A-Frame quando o DOM estiver pronto
+document.addEventListener("DOMContentLoaded", () => {
+    const btnBase = document.getElementById("hotspot-base");
+    const btnBraco = document.getElementById("hotspot-braco");
+    const btnPunho = document.getElementById("hotspot-punho");
+    const btnGarra = document.getElementById("hotspot-garra");
+
+    if (btnBase) {
+        btnBase.addEventListener("click", () => {
+            exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
+        });
+    }
+
+    if (btnBraco) {
+        btnBraco.addEventListener("click", () => {
+            exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
+        });
+    }
+
+    if (btnPunho) {
+        btnPunho.addEventListener("click", () => {
+            exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
+        });
+    }
+
+    if (btnGarra) {
+        btnGarra.addEventListener("click", () => {
+            carregarTelemetria();
+        });
+    }
+});
