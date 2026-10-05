@@ -45,32 +45,25 @@ async function carregarTelemetria() {
     }
 }
 
-// Configura os ouvintes de evento diretamente em cada elemento assim que carregados
-window.addEventListener("DOMContentLoaded", () => {
-    const associarClique = (id, acao) => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener("click", acao);
-            el.addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                acao();
-            });
-        }
-    };
+// Registra o componente personalizado do A-Frame para lidar nativamente com cliques 3D
+AFRAME.registerComponent('hotspot-action', {
+    schema: {
+        tipo: { type: 'string', default: '' }
+    },
+    init: function () {
+        const el = this.el;
+        const tipo = this.data.tipo;
 
-    associarClique("hotspot-base", () => {
-        exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
-    });
-
-    associarClique("hotspot-braco", () => {
-        exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
-    });
-
-    associarClique("hotspot-punho", () => {
-        exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
-    });
-
-    associarClique("hotspot-garra", () => {
-        carregarTelemetria();
-    });
+        el.addEventListener('click', function () {
+            if (tipo === 'base') {
+                exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
+            } else if (tipo === 'braco') {
+                exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
+            } else if (tipo === 'punho') {
+                exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
+            } else if (tipo === 'garra') {
+                carregarTelemetria();
+            }
+        });
+    }
 });
