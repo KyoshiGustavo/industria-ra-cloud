@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: broker-mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  backend:
+    build: ./backend
+    container_name: api-flask
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mosquitto
+
+  simulator:
+    build: ./simulator
+    container_name: simulador-telemetria
+    depends_on:
+      - mosquitto
+      - backend

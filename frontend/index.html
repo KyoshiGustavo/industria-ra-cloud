@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR - Monitoramento Robô Industrial</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+
+    <div id="info-panel">
+        <div id="panel-content"></div>
+        <button onclick="fecharPainel()">Fechar</button>
+    </div>
+
+    <a-scene 
+        mindar-image="imageTargetSrc: assets/target-robo.mind;" 
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights" 
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false">
+        
+        <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse" raycaster="near: 0.1; far: 100; objects: .clickable"></a-camera>
+
+        <a-entity mindar-image-target="targetIndex: 0">
+            
+            <a-sphere class="clickable" position="-0.2 -0.4 0" radius="0.06" color="#FF5722"
+                onclick="exibirInfoEstatica('Base do Robô', 'Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.')">
+            </a-sphere>
+
+            <a-sphere class="clickable" position="-0.2 0.0 0" radius="0.06" color="#2196F3"
+                onclick="exibirInfoEstatica('Braço Principal', 'Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).')">
+            </a-sphere>
+
+            <a-sphere class="clickable" position="0.2 0.3 0" radius="0.06" color="#4CAF50"
+                onclick="exibirInfoEstatica('Punho Articulado', 'Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.')">
+            </a-sphere>
+
+            <a-sphere class="clickable" position="0.4 0.1 0" radius="0.08" color="#E91E63"
+                onclick="carregarTelemetria()">
+            </a-sphere>
+
+        </a-entity>
+    </a-scene>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
