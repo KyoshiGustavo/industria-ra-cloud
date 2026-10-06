@@ -45,16 +45,16 @@ async function carregarTelemetria() {
     }
 }
 
-// Componente A-Frame para eventos 3D
+// Componente customizado do A-Frame
 AFRAME.registerComponent('hotspot-action', {
-    schema: {
-        tipo: { type: 'string', default: '' }
-    },
+    schema: { type: 'string' },
     init: function () {
+        const tipo = this.data;
         const el = this.el;
-        const tipo = this.data.tipo;
 
-        const dispararAcao = () => {
+        const executarAcao = (evt) => {
+            if (evt) evt.stopPropagation();
+            
             if (tipo === 'base') {
                 exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
             } else if (tipo === 'braco') {
@@ -66,10 +66,8 @@ AFRAME.registerComponent('hotspot-action', {
             }
         };
 
-        el.addEventListener('click', dispararAcao);
-        el.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            dispararAcao();
-        });
+        // Captura tanto o clique sintético do raycaster quanto mousedown/click direto
+        el.addEventListener('click', executarAcao);
+        el.addEventListener('mousedown', executarAcao);
     }
 });

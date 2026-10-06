@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>WebAR - Monitoramento Robô Industrial</title>
     <link rel="stylesheet" href="css/style.css">
     
@@ -11,7 +11,6 @@
     <script src="js/app.js"></script>
 
     <style>
-        /* Estilos do painel de botões overlay */
         #ar-overlay-ui {
             position: fixed;
             bottom: 20px;
@@ -45,13 +44,13 @@
 </head>
 <body>
 
-    <!-- Painel de Informações Pop-up -->
+    <!-- Painel Pop-up -->
     <div id="info-panel">
         <div id="panel-content"></div>
         <button onclick="fecharPainel()">Fechar</button>
     </div>
 
-    <!-- Botões Flutuantes (2D Overlay) para Garantia de Acessibilidade no Telemóvel -->
+    <!-- Interface 2D Overlay (Acessibilidade e garantia de funcionamento) -->
     <div id="ar-overlay-ui">
         <button class="ar-btn btn-base" onclick="exibirInfoEstatica('Base do Robô', 'Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.')">Base</button>
         <button class="ar-btn btn-braco" onclick="exibirInfoEstatica('Braço Principal', 'Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).')">Braço</button>
@@ -64,17 +63,17 @@
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false" 
-        device-orientation-permission-ui="enabled: false"
-        raycaster="objects: .clickable"
-        cursor="rayOrigin: mouse; fuse: false">
+        device-orientation-permission-ui="enabled: false">
         
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <!-- Câmera com cursor e raycaster explícitos para mobile -->
+        <a-camera position="0 0 0" look-controls="enabled: false" raycaster="objects: .clickable" cursor="fuse: false; rayOrigin: mouse;"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0">
-            <a-sphere hotspot-action="tipo: base" class="clickable" position="-0.2 -0.4 0" radius="0.1" color="#FF5722"></a-sphere>
-            <a-sphere hotspot-action="tipo: braco" class="clickable" position="-0.2 0.0 0" radius="0.1" color="#2196F3"></a-sphere>
-            <a-sphere hotspot-action="tipo: punho" class="clickable" position="0.2 0.3 0" radius="0.1" color="#4CAF50"></a-sphere>
-            <a-sphere hotspot-action="tipo: garra" class="clickable" position="0.4 0.1 0" radius="0.12" color="#E91E63"></a-sphere>
+            <!-- Aumentamos o raio (radius) para 0.15 para expandir a área de toque no celular -->
+            <a-sphere hotspot-action="base" class="clickable" position="-0.2 -0.4 0" radius="0.15" color="#FF5722"></a-sphere>
+            <a-sphere hotspot-action="braco" class="clickable" position="-0.2 0.0 0" radius="0.15" color="#2196F3"></a-sphere>
+            <a-sphere hotspot-action="punho" class="clickable" position="0.2 0.3 0" radius="0.15" color="#4CAF50"></a-sphere>
+            <a-sphere hotspot-action="garra" class="clickable" position="0.4 0.1 0" radius="0.18" color="#E91E63"></a-sphere>
         </a-entity>
     </a-scene>
 
