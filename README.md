@@ -22,3 +22,5 @@ Aplicação de Realidade Aumentada baseada na Web (WebAR) integrada a um ecossis
 1. Suba os containers da aplicação:
 ```bash
 docker compose up --build
+
+A aplicação conta com renderização de elementos 3D rastreados por visão computacional (MindAR). Devido às variações de suporte ao evento de raycasting WebGL em ecossistemas móveis (especialmente em navegação tátil mobile), foi implementada uma interface Overlay 2D responsiva no ecrã. Esta abordagem garante acesso universal às informações estáticas dos eixos e aos dados de telemetria em tempo real via API REST, cumprindo todos os requisitos de usabilidade do projeto.

@@ -1,4 +1,4 @@
-const API_URL = "https://opulent-space-fiesta-6vg6w9rx469g346q7-5000.app.github.dev/api/equipamentos/ROBO-01";
+const API_URL = "https://SEU-CODESPACE-AQUI-5000.app.github.dev/api/equipamentos/ROBO-01";
 
 function fecharPainel() {
     document.getElementById("info-panel").style.display = "none";
