@@ -45,29 +45,32 @@ async function carregarTelemetria() {
     }
 }
 
-// Componente customizado do A-Frame
-AFRAME.registerComponent('hotspot-action', {
-    schema: { type: 'string' },
-    init: function () {
-        const tipo = this.data;
-        const el = this.el;
+// Vincula os eventos de clique diretamente às entidades 3D
+window.addEventListener("load", () => {
+    const associarEventoToque = (id, acao) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("click", acao);
+            el.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                acao();
+            });
+        }
+    };
 
-        const executarAcao = (evt) => {
-            if (evt) evt.stopPropagation();
-            
-            if (tipo === 'base') {
-                exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
-            } else if (tipo === 'braco') {
-                exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
-            } else if (tipo === 'punho') {
-                exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
-            } else if (tipo === 'garra') {
-                carregarTelemetria();
-            }
-        };
+    associarEventoToque("hotspot-base", () => {
+        exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
+    });
 
-        // Captura tanto o clique sintético do raycaster quanto mousedown/click direto
-        el.addEventListener('click', executarAcao);
-        el.addEventListener('mousedown', executarAcao);
-    }
+    associarEventoToque("hotspot-braco", () => {
+        exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
+    });
+
+    associarEventoToque("hotspot-punho", () => {
+        exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
+    });
+
+    associarEventoToque("hotspot-garra", () => {
+        carregarTelemetria();
+    });
 });
