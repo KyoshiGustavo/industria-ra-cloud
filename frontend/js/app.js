@@ -45,41 +45,23 @@ async function carregarTelemetria() {
     }
 }
 
-// Configuração de eventos para mobile (Touch & Click)
-document.addEventListener("DOMContentLoaded", () => {
-    const sceneEl = document.querySelector("a-scene");
+// O componente DEVE ser registrado antes do carregamento da cena
+AFRAME.registerComponent('hotspot-listener', {
+    schema: { type: 'string' },
+    init: function () {
+        const tipo = this.data;
+        const el = this.el;
 
-    // Função universal para acionar a ação do hotspot
-    function dispararAcao(tipo) {
-        if (tipo === 'base') {
-            exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
-        } else if (tipo === 'braco') {
-            exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
-        } else if (tipo === 'punho') {
-            exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
-        } else if (tipo === 'garra') {
-            carregarTelemetria();
-        }
+        el.addEventListener('click', function () {
+            if (tipo === 'base') {
+                exibirInfoEstatica("Base do Robô", "Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.");
+            } else if (tipo === 'braco') {
+                exibirInfoEstatica("Braço Principal", "Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).");
+            } else if (tipo === 'punho') {
+                exibirInfoEstatica("Punho Articulado", "Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.");
+            } else if (tipo === 'garra') {
+                carregarTelemetria();
+            }
+        });
     }
-
-    // Registra os componentes de toque e clique individualmente em cada esfera
-    AFRAME.registerComponent('hotspot-listener', {
-        schema: { type: 'string' },
-        init: function () {
-            const tipo = this.data;
-            const el = this.el;
-
-            // Escuta 'click' padrão do A-Frame
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                dispararAcao(tipo);
-            });
-
-            // Escuta 'touchstart' para mobile em navegadores WebGL
-            el.addEventListener('touchstart', (e) => {
-                e.stopPropagation();
-                dispararAcao(tipo);
-            });
-        }
-    });
 });

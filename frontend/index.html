@@ -8,6 +8,7 @@
     
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <!-- O script do app.js precisa carregar AQUI para registrar os componentes a tempo -->
     <script src="js/app.js"></script>
 </head>
 <body>
@@ -18,24 +19,22 @@
         <button onclick="fecharPainel()">Fechar</button>
     </div>
 
-    <!-- Interface Overlay de Acesso Rápido -->
-    <div id="ar-overlay-ui" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; gap: 10px; background: rgba(0,0,0,0.65); padding: 10px 15px; border-radius: 30px;">
-        <button style="border:none; color:white; background:#FF5722; padding:10px 14px; border-radius:20px; font-weight:bold;" onclick="exibirInfoEstatica('Base do Robô', 'Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.')">Base</button>
-        <button style="border:none; color:white; background:#2196F3; padding:10px 14px; border-radius:20px; font-weight:bold;" onclick="exibirInfoEstatica('Braço Principal', 'Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).')">Braço</button>
-        <button style="border:none; color:white; background:#4CAF50; padding:10px 14px; border-radius:20px; font-weight:bold;" onclick="exibirInfoEstatica('Punho Articulado', 'Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.')">Punho</button>
-        <button style="border:none; color:white; background:#E91E63; padding:10px 14px; border-radius:20px; font-weight:bold;" onclick="carregarTelemetria()">Garra (Telemetria)</button>
+    <!-- Interface Overlay 2D (Garantia de usabilidade alternativa em qualquer telemóvel) -->
+    <div id="ar-overlay-ui" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; gap: 8px; background: rgba(0,0,0,0.7); padding: 10px 14px; border-radius: 30px; max-width: 90vw; box-sizing: border-box;">
+        <button style="border:none; color:white; background:#FF5722; padding:8px 12px; border-radius:15px; font-weight:bold; font-size:12px;" onclick="exibirInfoEstatica('Base do Robô', 'Estrutura de fixação e rotação do Eixo 1. Suporta toda a carga dinâmica do manipulador.')">Base</button>
+        <button style="border:none; color:white; background:#2196F3; padding:8px 12px; border-radius:15px; font-weight:bold; font-size:12px;" onclick="exibirInfoEstatica('Braço Principal', 'Segmento articulado responsável pela elevação e alcance (Eixos 2 e 3).')">Braço</button>
+        <button style="border:none; color:white; background:#4CAF50; padding:8px 12px; border-radius:15px; font-weight:bold; font-size:12px;" onclick="exibirInfoEstatica('Punho Articulado', 'Mecanismo de orientação final (Eixos 4, 5 e 6) de alta precisão.')">Punho</button>
+        <button style="border:none; color:white; background:#E91E63; padding:8px 12px; border-radius:15px; font-weight:bold; font-size:12px;" onclick="carregarTelemetria()">Garra</button>
     </div>
 
     <a-scene 
-        mindar-image="imageTargetSrc: ./assets/target-robo.mind;" 
+        mindar-image="imageTargetSrc: assets/target-robo.mind;" 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false" 
         device-orientation-permission-ui="enabled: false">
         
-        <a-camera position="0 0 0" look-controls="enabled: false">
-            <a-cursor id="cursor" raycaster="objects: .clickable" cursor="fuse: false; rayOrigin: mouse"></a-cursor>
-        </a-camera>
+        <a-camera position="0 0 0" look-controls="enabled: false" raycaster="objects: .clickable" cursor="fuse: false; rayOrigin: mouse"></a-camera>
 
         <a-entity mindar-image-target="targetIndex: 0">
             <a-sphere hotspot-listener="base" class="clickable" position="-0.2 -0.4 0" radius="0.15" color="#FF5722"></a-sphere>
